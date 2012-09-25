@@ -10,5 +10,5 @@ Setup
 2. Download Colemak Evil and put it somewhere in your load path.
 3. Add the following to ~/.emacs:
 ```
-(load "colemak-evil-remaps")
+(load "colemak-evil")
 ```
