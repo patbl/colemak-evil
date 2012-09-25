@@ -9,6 +9,7 @@ Setup
 1. [Install Evil](http://gitorious.org/evil/pages/Home). 
 2. Download Colemak Evil and put it somewhere in your load path.
 3. Add the following to ~/.emacs:
+
 ```elisp
 (load "colemak-evil-remaps")
 ```
