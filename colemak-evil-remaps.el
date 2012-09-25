@@ -58,9 +58,9 @@
 (set-in-all-evil-states-but-insert "l" 'evil-backward-word-begin)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
 (set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
-(set-in-all-evil-states-but-insert "L" 'evil-beginning-of-line)
-(set-in-all-evil-states-but-insert "j" 'evil-scroll-up)
-(set-in-all-evil-states-but-insert "h" 'evil-scroll-down)
+(set-in-all-evil-states-but-insert "L" 'back-to-indentation) ; back-to-indentation instead of 'evil-beginning-of-line so that cursor ends up at the beginning of code rather than at the beginning of the line proper
+(set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
+(set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-make)
 
@@ -83,6 +83,16 @@
 (set-in-all-evil-states-but-insert "c" 'evil-yank)
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
 
+(define-key evil-motion-state-map "\C-b" 'evil-visual-block)
+(define-key evil-motion-state-map (kbd "j") 'evil-scroll-page-up)
+(define-key evil-motion-state-map (kbd "h") 'evil-scroll-page-down)
+(define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
+(define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
+(define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
+(define-key evil-motion-state-map (kbd "C-y") 'evil-scroll-line-up)
+
+
+
 ;; undo
 (define-key evil-normal-state-map "z" 'undo)
 (when (fboundp 'undo-tree-undo)
@@ -92,11 +102,13 @@
 ;; Execute command
 (define-key evil-motion-state-map ";" 'evil-ex)
 
-(define-key evil-motion-state-map "p" 'evil-find-char-to)
-(define-key evil-motion-state-map "P" 'evil-find-char-to-backward)
+(set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
+(set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
+(define-key evil-motion-state-map "b" 'evil-repeat-find-char)
+(define-key evil-motion-state-map "B" 'evil-repeat-find-char-reverse)
 
-;(define-key evil-normal-state-map "qq" 'evil-record-macro)
-;(define-key evil-normal-state-map "Q" 'evil-execute-macro)
+(define-key evil-motion-state-map "k" 'evil-search-next)
+(define-key evil-motion-state-map "K" 'evil-search-previous)
 
 ;; (define-key evil-normal-state-map "zo" 'evil-open-fold)
 ;; (define-key evil-normal-state-map "zc" 'evil-close-fold)
@@ -108,7 +120,18 @@
 ;(define-key evil-motion-state-map "B" 'evil-backward-WORD-begin)
 ;(define-key evil-motion-state-map "e" 'evil-forward-word-end)
 ;(define-key evil-motion-state-map "E" 'evil-forward-WORD-end)
-;(define-key evil-motion-state-map " " 'evil-forward-char)
+(define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
+
+(set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
+(set-in-all-evil-states-but-insert "N" '(lambda () (interactive) (evil-backward-char 5)))
+(set-in-all-evil-states-but-insert "Y" '(lambda () (interactive) (evil-forward-word-begin 5)))
+(set-in-all-evil-states-but-insert "L" '(lambda () (interactive) (evil-backward-word-begin 5)))
+(set-in-all-evil-states-but-insert "E" '(lambda () (interactive) (evil-next-line 5)))
+(set-in-all-evil-states-but-insert "U" '(lambda () (interactive) (evil-previous-line 5)))
+
+;; (define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (insert "\n")))
+
 ;(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
 
 ;(define-key evil-motion-state-map "\C-b" 'evil-visual-block)
+
