@@ -124,8 +124,6 @@
 
 (set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
 (set-in-all-evil-states-but-insert "N" '(lambda () (interactive) (evil-backward-char 5)))
-(set-in-all-evil-states-but-insert "Y" '(lambda () (interactive) (evil-forward-word-begin 5)))
-(set-in-all-evil-states-but-insert "L" '(lambda () (interactive) (evil-backward-word-begin 5)))
 (set-in-all-evil-states-but-insert "E" '(lambda () (interactive) (evil-next-line 5)))
 (set-in-all-evil-states-but-insert "U" '(lambda () (interactive) (evil-previous-line 5)))
 
