@@ -47,11 +47,8 @@
 				   evil-emacs-state-map
 				   evil-motion-state-map)))
 
-(set-in-all-evil-states "i" 'evil-forward-char (list evil-normal-state-map
-                                                     evil-visual-state-map
-                                                     evil-emacs-state-map))
 
-;; (evil-define-key 'normal dired-mode-map "i" 'evil-forward-char)
+(set-in-all-evil-states-but-insert "i" 'evil-forward-char)
 (set-in-all-evil-states-but-insert "n" 'evil-backward-char)
 (set-in-all-evil-states-but-insert "e" 'evil-next-line)
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
