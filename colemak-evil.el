@@ -130,3 +130,13 @@
 
 ;(define-key evil-motion-state-map "\C-b" 'evil-visual-block)
 
+(set-in-all-evil-states (kbd "C-<next>") 'evil-window-bottom)
+(set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
+
+(set-in-all-evil-states-but-insert (kbd "C-y") 'evil-forward-WORD-begin)
+(set-in-all-evil-states-but-insert (kbd "C-l") 'evil-backward-WORD-begin)
+
+(set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
+					     (goto-char (point-min))))
+(set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
+					     (goto-char (point-max))))
