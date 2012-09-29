@@ -194,7 +194,9 @@
 ;;; Free mappings: ,/+/H
 
 ;;; Macros
-;;; not implemented
+(define-key evil-normal-state-map "Q" '(lambda ()
+					 (interactive)
+					 (evil-execute-macro 1 last-kbd-macro)))
 
 ;;; Duplicate line
 ;;; not implemented
