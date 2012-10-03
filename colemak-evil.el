@@ -43,6 +43,7 @@
 (set-in-all-evil-states-but-insert "e" 'evil-next-line)
 (set-in-all-evil-states-but-insert "n" 'evil-backward-char)
 (set-in-all-evil-states-but-insert "i" 'evil-forward-char)
+(define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;;; Beginning/end of line (home/end)
 ;; back-to-indentation instead of 'evil-beginning-of-line so that cursor ends up at the first non-whitespace character of a line
@@ -69,8 +70,11 @@
 (set-in-all-evil-states-but-insert (kbd "C-l") 'evil-backward-WORD-begin)
 
 ;;; inneR text objects
-;; TODO (the command below doesn't work)
-;; (set-in-all-evil-states-but-insert "r" 'evil-inner-text-objects-map)
+(define-key evil-visual-state-map "r" evil-inner-text-objects-map)
+(define-key evil-operator-state-map "r" evil-inner-text-objects-map)
+(define-key evil-inner-text-objects-map "y" 'evil-inner-word)
+(define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
+
 
 ;;; End of word forward/backward
 ;; (set-in-all-evil-states-but-insert ";" 'evil-forward-word-end)
@@ -136,7 +140,7 @@
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-make)
-;; (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer) ; conflicts with the useful C-a command. Use C-x h instead
+(set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer) ; use 0 to get to the first character of a line
 ;(define-key evil-motion-state-map "\C-b" 'evil-visual-block) ; not necessary, since C-v isn't needed for paste (use v instead)
 ;; Allow switching from visual line to visual block mode
 ;; not implemented
@@ -219,7 +223,13 @@
 ;(define-key evil-motion-state-map "e" 'evil-forward-word-end)
 ;(define-key evil-motion-state-map "E" 'evil-forward-WORD-end)
 (define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
-
+(defun my-move-key (keymap-from keymap-to key)
+  "Moves key binding from one keymap to another, deleting from the old location. "
+  (define-key keymap-to key (lookup-key keymap-from key))
+  (define-key keymap-from key nil))
+(my-move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
+(my-move-key evil-motion-state-map evil-normal-state-map " ")
+(my-move-key evil-motion-state-map evil-normal-state-map (kbd "DEL"))
 
 ;; (define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (insert "\n")))
 
@@ -227,5 +237,21 @@
 
 ;(define-key evil-motion-state-map "\C-b" 'evil-visual-block)
 
+(set-in-all-evil-states-but-insert "ge" 'evil-next-visual-line)
+(set-in-all-evil-states-but-insert "gu" 'evil-previous-visual-line)
 
+;;; window handling
+;; (define-prefix-command 'evil-window-map)
+;; ;; (define-key evil-motion-state-map "\C-r" 'evil-window-map)
+;; ;; (define-key evil-window-map "\C-r" 'evil-window-next)
+;; ;; (define-key evil-window-map "\C-R" 'evil-window-prev)
+(define-key evil-window-map "n" 'evil-window-left)
+(define-key evil-window-map "N" 'evil-window-move-far-left)
+(define-key evil-window-map "e" 'evil-window-down)
+(define-key evil-window-map "E" 'evil-window-move-very-bottom)
+(define-key evil-window-map "u" 'evil-window-up)
+(define-key evil-window-map "U" 'evil-window-move-very-top)
+(define-key evil-window-map "i" 'evil-window-right)
+(define-key evil-window-map "I" 'evil-window-move-far-right)
+(define-key evil-window-map "k" 'evil-window-new)
 
