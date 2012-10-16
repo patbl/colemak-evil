@@ -231,8 +231,6 @@
 (my-move-key evil-motion-state-map evil-normal-state-map " ")
 (my-move-key evil-motion-state-map evil-normal-state-map (kbd "DEL"))
 
-;; (define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (insert "\n")))
-
 ;(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
 
 ;(define-key evil-motion-state-map "\C-b" 'evil-visual-block)
