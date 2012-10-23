@@ -223,6 +223,7 @@
 ;(define-key evil-motion-state-map "E" 'evil-forward-WORD-end)
 (define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
 (define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
+(define-key evil-motion-state-map (kbd "<backspace>") 'evil-delete-backward-char)
 
 ;(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
 
