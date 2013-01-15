@@ -1,4 +1,3 @@
-;;; Preliminaries
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
@@ -6,13 +5,14 @@
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
 
-;; To enter normal mode:
-;; Use <Esc>
-;; define your own key combination using Key Chord (http://www.emacswiki.org/emacs/key-chord.el).
-;; "hn" is the only home-row combination that I know of that is relatively uncommon in English:
-;; (key-chord-define-global "hn" 'evil-normal-state)
+;; To enter normal mode: Use <Esc> or define your own key combination
+;;  using Key Chord (http://www.emacswiki.org/emacs/key-chord.el).
+;;  "hn" is the only home-row combination that I know of that is
+;;  relatively uncommon in English: (key-chord-define-global "hn"
+;;  'evil-normal-state)
 
-;;; map multiple states at once (courtesy of Michael Markert http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
+;; map multiple states at once (courtesy of Michael Markert;
+;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
 (defun set-in-all-evil-states (key def &optional maps)
   (unless maps
     (setq maps (list evil-normal-state-map
@@ -30,13 +30,9 @@
 				   evil-emacs-state-map
 				   evil-motion-state-map)))
 
-;;; No insert-state alt-navigation remappings (they would clobber Emacs shortcuts, and Emacs has its own navigation commands thaty ou can use
-
-;;; Turbo navigation mode
-(set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
-(set-in-all-evil-states-but-insert "N" '(lambda () (interactive) (evil-backward-char 5)))
-(set-in-all-evil-states-but-insert "E" '(lambda () (interactive) (evil-next-line 5)))
-(set-in-all-evil-states-but-insert "U" '(lambda () (interactive) (evil-previous-line 5)))
+;;; No insert-state alt-navigation remappings (they would clobber
+;;; Emacs shortcuts, and Emacs has its own navigation commands that 
+;;; you can use
 
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
@@ -45,9 +41,18 @@
 (set-in-all-evil-states-but-insert "i" 'evil-forward-char)
 (define-key evil-operator-state-map "i" 'evil-forward-char)
 
+;;; Turbo navigation mode
+(set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
+(set-in-all-evil-states-but-insert "N" '(lambda () (interactive) (evil-backward-char 5)))
+(set-in-all-evil-states-but-insert "E" '(lambda () (interactive) (evil-next-line 5)))
+(set-in-all-evil-states-but-insert "U" '(lambda () (interactive) (evil-previous-line 5)))
+
 ;;; Beginning/end of line (home/end)
-;; back-to-indentation instead of 'evil-beginning-of-line so that cursor ends up at the first non-whitespace character of a line
-(set-in-all-evil-states-but-insert "L" 'back-to-indentation) (set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
+;; Use back-to-indentation instead of evil-beginning-of-line so that
+;; cursor ends up at the first non-whitespace character of a line. 0
+;; can be used to go to real beginning of line
+(set-in-all-evil-states-but-insert "L" 'back-to-indentation)
+(set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
 
 ;;; Page up/page down
 (define-key evil-motion-state-map (kbd "j") 'evil-scroll-page-up)
@@ -75,8 +80,10 @@
 (define-key evil-inner-text-objects-map "y" 'evil-inner-word)
 (define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
 
+;; Execute command: map : to ;
+(define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
 
-;;; End of word forward/backward
+;;; Word end forward/backward
 ;; (set-in-all-evil-states-but-insert ";" 'evil-forward-word-end)
 ;; (set-in-all-evil-states-but-insert "g;" 'evil-backward-word-end)
 
@@ -87,12 +94,9 @@
 ;; (define-key evil-normal-state-map ",r" 'evil-open-folds)
 ;; (define-key evil-normal-state-map ",m" 'evil-close-folds)
 
-;; Execute command: map : to ;
-(define-key evil-motion-state-map ";" 'evil-ex)
-
-;;; for virtualedit=onemore
-;;; set virtualedit=block,onemore
 ;;; I'm not sure what this is
+;; for virtualedit=onemore
+;; set virtualedit=block,onemore
 
 ;;; Cut/copy/paste
 (set-in-all-evil-states-but-insert "x" 'evil-delete-char)
@@ -107,6 +111,7 @@
 (when (fboundp 'undo-tree-undo)
   (define-key evil-normal-state-map "z" 'undo-tree-undo)
   (define-key evil-normal-state-map "Z" 'undo-tree-redo))
+
 ;;; Break undo chain
 ;; not sure what this is
 
@@ -115,12 +120,14 @@
 (set-in-all-evil-states-but-insert ")" 'evil-jump-forward)
 
 ;;; Start/end of document
+;; How is this different from gg/G?
 (set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
 					     (goto-char (point-min))))
 (set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
 					     (goto-char (point-max))))
 
-;;; Move cursor to top/bottom of screen (next/prior are page up/down)
+;;; Move cursor to top/bottom of screen
+;; next/prior are page up/down
 (set-in-all-evil-states (kbd "C-<next>") 'evil-window-bottom)
 (set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
 
@@ -140,9 +147,14 @@
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-make)
-(set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer) ; use 0 to get to the first character of a line
-;(define-key evil-motion-state-map "\C-b" 'evil-visual-block) ; not necessary, since C-v isn't needed for paste (use v instead)
-;; Allow switching from visual line to visual block mode
+(set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
+
+;;; visual Block mode
+;; Since the system clipboard is accessible by Emacs through the
+;; regular paste command (v), a separate C-v mapping isn't needed.
+;; (define-key evil-motion-state-map "\C-b" 'evil-visual-block)
+
+;;; Allow switching from visual line to visual block mode
 ;; not implemented
 
 ;;; Visual mode with mouse
@@ -165,10 +177,9 @@
 ;; not implemented
 
 ;;; Tabs
-;; Who needs tabs? Use iswitchb instead. Put
-;; (iswitchb-mode 1)
-;; in your .emacs and use C-x b to search for the buffer you want.
-;; C-s and C-r rotate through the listed buffers
+;; Who needs tabs? Use iswitchb instead. Put (iswitchb-mode 1) in your
+;; .emacs and use C-x b to search for the buffer you want. C-s and C-r
+;; rotate through the listed buffers
 
 ;;; New/close/save
 ;; these might conflict with emacs mappings
@@ -192,7 +203,7 @@
 (define-key evil-motion-state-map (kbd "C-<down>") 'evil-scroll-line-down)
 
 ;;; Live line reordering
-;; TODO
+;; not implemented
 
 ;;; Restore mappings
 ;;; Free mappings: ,/+/H
@@ -203,40 +214,36 @@
 					 (evil-execute-macro 1 last-kbd-macro)))
 
 ;;; Duplicate line
-;;; not implemented
+;; not implemented
+;; Use "CV" instead
 
 ;;; Misc overridden keys must be prefixed with g
-;;; not useful anyway
+;; not implemented
 
+;;; Search
 (define-key evil-motion-state-map "k" 'evil-search-next)
 (define-key evil-motion-state-map "K" 'evil-search-previous)
 
+;;; Folding
 ;; (define-key evil-normal-state-map "zo" 'evil-open-fold)
 ;; (define-key evil-normal-state-map "zc" 'evil-close-fold)
 ;; (define-key evil-normal-state-map "za" 'evil-toggle-fold)
 ;; (define-key evil-normal-state-map "zr" 'evil-open-folds)
 ;; (define-key evil-normal-state-map "zm" 'evil-close-folds)
 
-
-;(define-key evil-motion-state-map "B" 'evil-backward-WORD-begin)
-;(define-key evil-motion-state-map "e" 'evil-forward-word-end)
-;(define-key evil-motion-state-map "E" 'evil-forward-WORD-end)
+;;; Make the space, return, and backspace keys work in normal mode
+;; Backspace in normal mode doesn't work in the terminal.
 (define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
 (define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
 (define-key evil-motion-state-map (kbd "<backspace>") 'evil-delete-backward-char)
 
-;(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
-
-;(define-key evil-motion-state-map "\C-b" 'evil-visual-block)
-
+;;; Visual line navigation
+;; In normal mode, use "ge" and "gu" when lines wrap.
 (set-in-all-evil-states-but-insert "ge" 'evil-next-visual-line)
 (set-in-all-evil-states-but-insert "gu" 'evil-previous-visual-line)
 
-;;; window handling
-;; (define-prefix-command 'evil-window-map)
-;; ;; (define-key evil-motion-state-map "\C-r" 'evil-window-map)
-;; ;; (define-key evil-window-map "\C-r" 'evil-window-next)
-;; ;; (define-key evil-window-map "\C-R" 'evil-window-prev)
+;;; Window handling
+;; C-w (not C-r as in Shai's mappings) prefixes window commands
 (define-key evil-window-map "n" 'evil-window-left)
 (define-key evil-window-map "N" 'evil-window-move-far-left)
 (define-key evil-window-map "e" 'evil-window-down)
@@ -246,4 +253,3 @@
 (define-key evil-window-map "i" 'evil-window-right)
 (define-key evil-window-map "I" 'evil-window-move-far-right)
 (define-key evil-window-map "k" 'evil-window-new)
-
