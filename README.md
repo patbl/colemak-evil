@@ -9,10 +9,10 @@ I'd be glad to integrate them.
 
 Here are a few of the main differences from Shai's mappings:
 
-* The only Vim mapping that works in instert mode is Esc (this avoids
+* The only Vim mapping that works in insert mode is Esc (this avoids
   conflicts with Emacs's shortucts).
-* Folding and several other features aren't implemented.
 * Tab in insert mode doesn't take you into normal mode.
+* Folding and several other features aren't implemented.
 
 There are also some Vim features that haven't yet been implemented in
 Evil. You'll probably have to add quite a few of your own mappings to
