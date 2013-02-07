@@ -121,10 +121,11 @@
 
 ;;; Start/end of document
 ;; How is this different from gg/G?
-(set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
-					     (goto-char (point-min))))
-(set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
-					     (goto-char (point-max))))
+;; C-h would interfere with the useful C-h f/v/k commands
+;; (set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
+					     ;; (goto-char (point-min))))
+;; (set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
+					     ;; (goto-char (point-max))))
 
 ;;; Move cursor to top/bottom of screen
 ;; next/prior are page up/down
