@@ -146,7 +146,7 @@
 
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
-(set-in-all-evil-states-but-insert "A" 'evil-visual-make)
+(set-in-all-evil-states-but-insert "A" 'evil-visual-line)
 (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
 
 ;;; visual Block mode
