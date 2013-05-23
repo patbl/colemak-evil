@@ -182,8 +182,6 @@
 ;; F unchanged
 (set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
 (set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
-;; (define-key evil-motion-state-map "b" 'evil-repeat-find-char)
-;; (define-key evil-motion-state-map "B" 'evil-repeat-find-char-reverse)
 
 ;;; GUI search
 ;; not implemented
