@@ -1,8 +1,10 @@
 ;;; License
 
 ;; This software is released under the CC0 1.0 Universal license. You are
-;; free to use, modify, and redistribute it as you please. For details, see
+;; free to use, modify, and redistribute it as you please. This software
+;; comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
 ;; http://creativecommons.org/publicdomain/zero/1.0/
+
 
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
@@ -35,6 +37,12 @@
 				   evil-visual-state-map
 				   evil-emacs-state-map
 				   evil-motion-state-map)))
+
+
+(defun set-in-all-evil-states-but-insert-and-motion (key def)
+  (set-in-all-evil-states key def (list evil-normal-state-map
+				   evil-visual-state-map
+				   evil-emacs-state-map)))
 
 ;;; No insert-state alt-navigation remappings (they would clobber
 ;;; Emacs shortcuts, and Emacs has its own navigation commands that 
@@ -174,8 +182,8 @@
 ;; F unchanged
 (set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
 (set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
-(define-key evil-motion-state-map "b" 'evil-repeat-find-char)
-(define-key evil-motion-state-map "B" 'evil-repeat-find-char-reverse)
+;; (define-key evil-motion-state-map "b" 'evil-repeat-find-char)
+;; (define-key evil-motion-state-map "B" 'evil-repeat-find-char-reverse)
 
 ;;; GUI search
 ;; not implemented
@@ -242,7 +250,7 @@
 ;; Backspace in normal mode doesn't work in the terminal.
 (define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
 (define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
-(define-key evil-motion-state-map (kbd "<backspace>") 'evil-delete-backward-char)
+(define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 ;;; Visual line navigation
 ;; In normal mode, use "ge" and "gu" when lines wrap.
@@ -260,3 +268,25 @@
 (define-key evil-window-map "i" 'evil-window-right)
 (define-key evil-window-map "I" 'evil-window-move-far-right)
 (define-key evil-window-map "k" 'evil-window-new)
+
+
+
+
+
+
+
+;lalop changes
+
+;(define-key evil-normal-state-map "\\" 'evil-indent)
+
+(define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
+
+(set-in-all-evil-states-but-insert "w" 'evil-shift-right)
+(set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-left) ;for compatiblilty with undo-tree
+
+(set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
+(set-in-all-evil-states-but-insert "F" 'delete-forward-char)
+
+(define-key evil-motion-state-map "b" 'switch-to-buffer)
+(define-key evil-motion-state-map "B" 'find-file)
+
