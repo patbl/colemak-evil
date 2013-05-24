@@ -156,8 +156,8 @@
 ;; not sure what this means
 
 ;;; Change
-(set-in-all-evil-states-but-insert "w" 'evil-change)
-(set-in-all-evil-states-but-insert "W" 'evil-change-line)
+(set-in-all-evil-states-but-insert "p" 'evil-change)
+(set-in-all-evil-states-but-insert "P" 'evil-change-line)
 
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
@@ -180,8 +180,8 @@
 ;;; Search
 ;; f unchanged
 ;; F unchanged
-(set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
-(set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
+;; (set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
+;; (set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
 
 ;;; GUI search
 ;; not implemented
@@ -275,12 +275,11 @@
 
 ;lalop changes
 
-;(define-key evil-normal-state-map "\\" 'evil-indent)
-
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
 
-(set-in-all-evil-states-but-insert "w" 'evil-shift-right)
-(set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-left) ;for compatiblilty with undo-tree
+;not motion for compatiblilty with undo-tree
+(set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
+(set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
 
 (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
 (set-in-all-evil-states-but-insert "F" 'delete-forward-char)
@@ -288,3 +287,25 @@
 (define-key evil-motion-state-map "b" 'switch-to-buffer)
 (define-key evil-motion-state-map "B" 'find-file)
 
+(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
+(define-key evil-motion-state-map "w" 'evil-backward-WORD-begin)
+
+(define-key evil-motion-state-map "\M-a" 'evil-visual-block)
+
+(evil-define-motion colemak-evil-paste-below (count)
+  (interactive) 
+  (evil-open-below 1) 
+  ;; (newline count) ;;TODO count indicates number of lines before the paste
+  (evil-paste-after 1)
+  (evil-normal-state))
+
+(evil-define-motion colemak-evil-paste-above (count)
+  (interactive) 
+  (evil-open-above 1) 
+  ;; (newline count) ;;TODO count indicates number of lines before the paste
+  (evil-paste-after 1)
+  (evil-normal-state))
+
+
+(define-key evil-motion-state-map "\M-o" 'colemak-evil-paste-below)
+(define-key evil-motion-state-map "\M-O" 'colemak-evil-paste-above)
