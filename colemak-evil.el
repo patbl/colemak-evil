@@ -155,10 +155,6 @@
 ;;; Make insert/add work also in visual line mode like in visual block mode
 ;; not sure what this means
 
-;;; Change
-(set-in-all-evil-states-but-insert "p" 'evil-change)
-(set-in-all-evil-states-but-insert "P" 'evil-change-line)
-
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-line)
@@ -200,8 +196,6 @@
 
 (set-in-all-evil-states-but-insert "J" 'evil-join)
 
-(set-in-all-evil-states-but-insert "o" 'evil-open-below)
-(set-in-all-evil-states-but-insert "O" 'evil-open-above)
 (set-in-all-evil-states-but-insert "r" 'evil-replace)
 (set-in-all-evil-states-but-insert "R" 'evil-replace-state)
 
@@ -273,9 +267,13 @@
 
 
 
-;lalop changes
 
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
+
+;;; Change
+(set-in-all-evil-states-but-insert "p" 'evil-change)
+(set-in-all-evil-states-but-insert "P" 'evil-change-line)
+
 
 ;not motion for compatiblilty with undo-tree
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
@@ -295,17 +293,40 @@
 (evil-define-motion colemak-evil-paste-below (count)
   (interactive) 
   (evil-open-below 1) 
-  ;; (newline count) ;;TODO count indicates number of lines before the paste
+  ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1)
   (evil-normal-state))
 
 (evil-define-motion colemak-evil-paste-above (count)
   (interactive) 
   (evil-open-above 1) 
-  ;; (newline count) ;;TODO count indicates number of lines before the paste
+  ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1)
   (evil-normal-state))
 
 
+(set-in-all-evil-states-but-insert "o" 'evil-open-below)
+(set-in-all-evil-states-but-insert "O" 'evil-open-above)
 (define-key evil-motion-state-map "\M-o" 'colemak-evil-paste-below)
 (define-key evil-motion-state-map "\M-O" 'colemak-evil-paste-above)
+
+;; ;;Experiment: swap o and ;
+;; (set-in-all-evil-states-but-insert ";" 'evil-open-below)
+;; (set-in-all-evil-states-but-insert ":" 'evil-open-above)
+;; (define-key evil-motion-state-map "\M-;" 'colemak-evil-paste-below)
+;; (define-key evil-motion-state-map "\M-:" 'colemak-evil-paste-above)
+;; ;;accounting for the other usages of o
+;; (define-key evil-window-map ";" 'delete-other-windows)
+;; (define-key evil-visual-state-map ";" 'exchange-point-and-mark)
+;; (define-key evil-visual-state-map ":" 'evil-visual-exchange-corners)
+;; (define-key evil-normal-state-map ";" 'evil-open-below)
+;; (define-key evil-normal-state-map ":" 'evil-open-above)
+;; ;;deleting those other usages of o
+;; (define-key evil-window-map "o" (lambda (&optional argz)))
+;; (define-key evil-visual-state-map "o" (lambda (&optional argz)))
+;; (define-key evil-visual-state-map "O" (lambda (&optional argz)))
+;; (define-key evil-normal-state-map "o" (lambda (&optional argz)))
+;; (define-key evil-normal-state-map "O" (lambda (&optional argz)))
+
+;allows you to use ; as :
+(define-key evil-motion-state-map ";" 'evil-ex-read-command)
