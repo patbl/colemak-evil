@@ -13,18 +13,6 @@
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
 
-;; To enter normal mode: Use <Esc> or define your own key combination
-;; using Key Chord (http://www.emacswiki.org/emacs/key-chord.el).
-;; "hn" is the only home-row combination that I know of that is
-;; relatively uncommon in English: (key-chord-define-global "hn"
-;; 'evil-normal-state). If you reduce the delay, you can use
-;; a common combination, such as "ne." After setting up Key Chord,
-;; the following worked for me:
-;; (setq key-chord-two-keys-delay .03)
-;; (key-chord-define-global "ne" 'evil-normal-state)
-
-
-
 ;; map multiple states at once (courtesy of Michael Markert;
 ;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
 (defun set-in-all-evil-states (key def &optional maps)
@@ -52,7 +40,7 @@
 
 ;;; No insert-state alt-navigation remappings (they would clobber
 ;;; Emacs shortcuts, and Emacs has its own navigation commands that 
-;;; you can use
+;;; you can use.
 
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
