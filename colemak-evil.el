@@ -1,3 +1,9 @@
+;;; License
+
+;; This software is released under the CC0 1.0 Universal license. You are
+;; free to use, modify, and redistribute it as you please. For details, see
+;; http://creativecommons.org/publicdomain/zero/1.0/
+
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
