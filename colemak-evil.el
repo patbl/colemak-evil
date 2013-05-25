@@ -279,6 +279,7 @@
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
 
+
 (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
 (set-in-all-evil-states-but-insert "F" 'delete-forward-char)
 
@@ -290,25 +291,63 @@
 
 (define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
+;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
+;TODO: Remember what state we were at before, and revert after 
 (evil-define-motion colemak-evil-paste-below (count)
-  (interactive) 
   (evil-open-below 1) 
   ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1)
   (evil-normal-state))
 
 (evil-define-motion colemak-evil-paste-above (count)
-  (interactive) 
   (evil-open-above 1) 
   ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1)
   (evil-normal-state))
 
+(evil-define-motion colemak-evil-paste-bol (count)
+  (back-to-indentation) 
+  (evil-paste-before 1))
+
+(evil-define-motion colemak-evil-paste-eol (count)
+  (evil-end-of-line) 
+  (evil-paste-after 1))
+
 
 (set-in-all-evil-states-but-insert "o" 'evil-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
-(define-key evil-motion-state-map "\M-o" 'colemak-evil-paste-below)
-(define-key evil-motion-state-map "\M-O" 'colemak-evil-paste-above)
+(set-in-all-evil-states "\M-o" 'colemak-evil-paste-above)
+(set-in-all-evil-states "\C-o" 'colemak-evil-paste-below)
+
+(set-in-all-evil-states "\M-l" 'colemak-evil-paste-bol)
+(set-in-all-evil-states "\M-y" 'colemak-evil-paste-eol)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;TODO make caps paste from kill ring search above/below
+
+;;;;Experiment: generalize the paste-above/paste-below functions as macros
+;; (defmacro colemak-evil-do-body ( body)
+;;   (when body
+;;     (car body)
+;;     (colemak-evil-do-body (cdr body))))
+
+;; (defmacro colemak-evil-do-interactively-then-normal (&rest body)
+;;   `(lambda (count)
+;;      (interactive)
+;;      (colemak-evil-do-body ,body)
+;;      (evil-normal-state)))
+  
+
+;; (set-in-all-evil-states-but-insert "o" 'evil-open-below)
+;; (set-in-all-evil-states-but-insert "O" 'evil-open-above)
+;; (define-key evil-motion-state-map "\C-o" (colemak-evil-do-interactively-then-normal (evil-open-below 1) (evil-paste-after 1) ))
+;; (define-key evil-motion-state-map "\C-O" (colemak-evil-do-interactively-then-normal (evil-open-above 1) (evil-paste-after 1) ))
+
+
+
 
 ;; ;;Experiment: swap o and ;
 ;; (set-in-all-evil-states-but-insert ";" 'evil-open-below)
