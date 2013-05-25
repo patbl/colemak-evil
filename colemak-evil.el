@@ -14,10 +14,16 @@
 (setq evil-want-fine-undo t)
 
 ;; To enter normal mode: Use <Esc> or define your own key combination
-;;  using Key Chord (http://www.emacswiki.org/emacs/key-chord.el).
-;;  "hn" is the only home-row combination that I know of that is
-;;  relatively uncommon in English: (key-chord-define-global "hn"
-;;  'evil-normal-state)
+;; using Key Chord (http://www.emacswiki.org/emacs/key-chord.el).
+;; "hn" is the only home-row combination that I know of that is
+;; relatively uncommon in English: (key-chord-define-global "hn"
+;; 'evil-normal-state). If you reduce the delay, you can use
+;; a common combination, such as "ne." After setting up Key Chord,
+;; the following worked for me:
+;; (setq key-chord-two-keys-delay .03)
+;; (key-chord-define-global "ne" 'evil-normal-state)
+
+
 
 ;; map multiple states at once (courtesy of Michael Markert;
 ;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
@@ -95,7 +101,7 @@
 (define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
 
 ;; Execute command: map : to ;
-(define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
+(define-key evil-motion-state-map ";" 'evil-ex)
 
 ;;; Word end forward/backward
 ;; (set-in-all-evil-states-but-insert ";" 'evil-forward-word-end)
@@ -119,6 +125,10 @@
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
 (set-in-all-evil-states-but-insert "v" 'evil-paste-before)
 (set-in-all-evil-states-but-insert "V" 'evil-paste-after)
+
+;;; Change
+(set-in-all-evil-states-but-insert "w" 'evil-change)
+(set-in-all-evil-states-but-insert "W" 'evil-change-line)
 
 ;;; Undo/redo
 (define-key evil-normal-state-map "z" 'undo)
@@ -176,8 +186,8 @@
 ;;; Search
 ;; f unchanged
 ;; F unchanged
-;; (set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
-;; (set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
+(set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
+(set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
 
 ;;; GUI search
 ;; not implemented
@@ -198,7 +208,6 @@
 
 (set-in-all-evil-states-but-insert "r" 'evil-replace)
 (set-in-all-evil-states-but-insert "R" 'evil-replace-state)
-
 
 (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
 (define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
@@ -261,113 +270,11 @@
 (define-key evil-window-map "I" 'evil-window-move-far-right)
 (define-key evil-window-map "k" 'evil-window-new)
 
-
-
-
-
-
-
-
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
-
-;;; Change
-(set-in-all-evil-states-but-insert "p" 'evil-change)
-(set-in-all-evil-states-but-insert "P" 'evil-change-line)
-
-
-;not motion for compatiblilty with undo-tree
-(set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
-(set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
-
-
-(set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
-(set-in-all-evil-states-but-insert "F" 'delete-forward-char)
-
-(define-key evil-motion-state-map "b" 'switch-to-buffer)
-(define-key evil-motion-state-map "B" 'find-file)
-
-(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
-(define-key evil-motion-state-map "w" 'evil-backward-WORD-begin)
-
-(define-key evil-motion-state-map "\M-a" 'evil-visual-block)
-
-;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
-;TODO: Remember what state we were at before, and revert after 
-(evil-define-motion colemak-evil-paste-below (count)
-  (evil-open-below 1) 
-  ;; (newline count) ;;TODO count indicates number of lines until the paste
-  (evil-paste-after 1)
-  (evil-normal-state))
-
-(evil-define-motion colemak-evil-paste-above (count)
-  (evil-open-above 1) 
-  ;; (newline count) ;;TODO count indicates number of lines until the paste
-  (evil-paste-after 1)
-  (evil-normal-state))
-
-(evil-define-motion colemak-evil-paste-bol (count)
-  (back-to-indentation) 
-  (evil-paste-before 1))
-
-(evil-define-motion colemak-evil-paste-eol (count)
-  (evil-end-of-line) 
-  (evil-paste-after 1))
-
 
 (set-in-all-evil-states-but-insert "o" 'evil-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
-(set-in-all-evil-states "\M-o" 'colemak-evil-paste-above)
-(set-in-all-evil-states "\C-o" 'colemak-evil-paste-below)
 
-(set-in-all-evil-states "\M-u" 'colemak-evil-paste-above)
-(set-in-all-evil-states "\M-e" 'colemak-evil-paste-below)
-(set-in-all-evil-states "\M-n" 'colemak-evil-paste-bol)
-(set-in-all-evil-states "\M-i" 'colemak-evil-paste-eol)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;TODO make caps paste from kill ring search above/below
-
-;;;;Experiment: generalize the paste-above/paste-below functions as macros
-;; (defmacro colemak-evil-do-body ( body)
-;;   (when body
-;;     (car body)
-;;     (colemak-evil-do-body (cdr body))))
-
-;; (defmacro colemak-evil-do-interactively-then-normal (&rest body)
-;;   `(lambda (count)
-;;      (interactive)
-;;      (colemak-evil-do-body ,body)
-;;      (evil-normal-state)))
-  
-
-;; (set-in-all-evil-states-but-insert "o" 'evil-open-below)
-;; (set-in-all-evil-states-but-insert "O" 'evil-open-above)
-;; (define-key evil-motion-state-map "\C-o" (colemak-evil-do-interactively-then-normal (evil-open-below 1) (evil-paste-after 1) ))
-;; (define-key evil-motion-state-map "\C-O" (colemak-evil-do-interactively-then-normal (evil-open-above 1) (evil-paste-after 1) ))
-
-
-
-
-;; ;;Experiment: swap o and ;
-;; (set-in-all-evil-states-but-insert ";" 'evil-open-below)
-;; (set-in-all-evil-states-but-insert ":" 'evil-open-above)
-;; (define-key evil-motion-state-map "\M-;" 'colemak-evil-paste-below)
-;; (define-key evil-motion-state-map "\M-:" 'colemak-evil-paste-above)
-;; ;;accounting for the other usages of o
-;; (define-key evil-window-map ";" 'delete-other-windows)
-;; (define-key evil-visual-state-map ";" 'exchange-point-and-mark)
-;; (define-key evil-visual-state-map ":" 'evil-visual-exchange-corners)
-;; (define-key evil-normal-state-map ";" 'evil-open-below)
-;; (define-key evil-normal-state-map ":" 'evil-open-above)
-;; ;;deleting those other usages of o
-;; (define-key evil-window-map "o" (lambda (&optional argz)))
-;; (define-key evil-visual-state-map "o" (lambda (&optional argz)))
-;; (define-key evil-visual-state-map "O" (lambda (&optional argz)))
-;; (define-key evil-normal-state-map "o" (lambda (&optional argz)))
-;; (define-key evil-normal-state-map "O" (lambda (&optional argz)))
 
 ;allows you to use ; as :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
