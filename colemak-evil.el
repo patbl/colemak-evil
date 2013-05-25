@@ -319,8 +319,10 @@
 (set-in-all-evil-states "\M-o" 'colemak-evil-paste-above)
 (set-in-all-evil-states "\C-o" 'colemak-evil-paste-below)
 
-(set-in-all-evil-states "\M-l" 'colemak-evil-paste-bol)
-(set-in-all-evil-states "\M-y" 'colemak-evil-paste-eol)
+(set-in-all-evil-states "\M-u" 'colemak-evil-paste-above)
+(set-in-all-evil-states "\M-e" 'colemak-evil-paste-below)
+(set-in-all-evil-states "\M-n" 'colemak-evil-paste-bol)
+(set-in-all-evil-states "\M-i" 'colemak-evil-paste-eol)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
