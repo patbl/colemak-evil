@@ -1,4 +1,4 @@
-colemak-evil
+Colemak Evil
 ============
 
 Colemak Evil is a set of remappings that implements some of
@@ -16,6 +16,14 @@ Here are a few of the main differences from Shai's mappings:
 * Folding and several other features aren't implemented.
 * Tab in insert mode doesn't take you into normal mode. 
 
+Setup
+-----
+1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
+2. Download Colemak Evil and put it somewhere in your load path.
+3. Add `(load "colemak-evil")` to your Emacs init file.
+
+Tips
+----
 Escape takes you into normal mode, but you may find that defining your
 own key combination using [Key Chord](http://www.emacswiki.org/emacs/key-chord.el)
 to be more comfortable. The only home-row combination that I know of
@@ -32,9 +40,3 @@ get your setup where you want it. For insert-mode mappings, check out
 [ErgoEmacs](http://ergoemacs.org/emacs/ergonomic_emacs_keybinding.html),
 which provides saner alternatives to Emacs's mappings (there's a
 Colemak version).
-
-Setup
------
-1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
-2. Download Colemak Evil and put it somewhere in your load path.
-3. Add `(load "colemak-evil")` to your Emacs init file.
