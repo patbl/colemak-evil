@@ -4,6 +4,50 @@
 ;; free to use, modify, and redistribute it as you please. For details, see
 ;; http://creativecommons.org/publicdomain/zero/1.0/
 
+
+(defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
+
+To dismiss: retype one of the above commands or press q in the buffer.
+
+NOTE/CREDITS: These hints were originally created by DreymaR for golemak.vim (http://forum.colemak.com/viewtopic.php?pid=6789#p6789). 
+Though most should have been corrected, some may still not be valid for colemak-evil.el.
+
+Normal mode:
++----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
+|~ Case    |! ExtFlt> |@ PlyMcr· |#  <-=    |$  ->|    |% GoMatch |^  <--    |& Rep :s  |*  =->    |( |<-Sent |) Sent->| |_ LastLin |+ Next<-- |
+|` Go Mk·  |1         |2         |3         |4         |5         |6         |7         |8         |9         |0  |<-    |- TopLine |= Format> |
++----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
+|          |  Quit    |          |          |          |          |          |          |          |          |          |          |          |
+|  NextTab |  =<C-v>  |  WinCmd  |  GUIFind |  =<Up>   |Abort cmd |          |   <--    |  ScrlUp  |   ->|    |          |          |          |
+| <TAB>    |Q PlyMcrQ |W ChangeLn|F <-Find· |P <-Prch· |G ScrMid  |J JoinLine|L <-WORD  |U  5Up    |Y WORD->  |; z-Cmd·  |{ |<-Para |} Para->| |
+| <TAB>    |  RecMcr· |  Change  |  Find·-> |  Prch·-> |  g-Cmd·  |  PgUp    |  <-word  |    Up    |  word->  |: z-Cmd·  |[ <-Misc· |] Misc·-> |
++----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
+ Meta----->|          |          |          |          |          |          |          |          |          |          |          |          |
+ Ctrl----->|  AreaAll |  Redo    |  Search  |          |  DelWord |          |          |  ScrlDwn |          |          |          |          |
+ Shift---->|A AreaLin |R RepMode |S |<-Ins  |T Att->|  |D Del->|  |H TopPage |N 5Left   |E  5Dn    |I 5Right  |O OpenUp  |\" SetReg· || GoCol1  |
+ Normal--->|  Area    |  Replce· |  InSert  |  ATtach  |  Delete> |  PgDn    |   Left   |    Dn    |   Right  |  OpenDn  |' GoMk·|< |\\ (usr)·  |
+           +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
+           |          |          |          |          |          |          |          |          |          |          |
+  Ctrl+:   |          |          |          | VisBlock |          |  Digraph |  =<CR>   |          |          |          |    · = char arg.
+Up/Dn scrl |Z Redo    |X <-Cut   |C CopyLin |V <-Paste |B RevFndCh|K <-Next§ |M ScrMid  |< Unindt> |> Indent> |? <-Find§ |    > = move arg.
+PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> |  Set Mk· |, (usr)·  |. Repeat  |/ Find§-> |
+           +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+")
+
+(defun colemak-evil-hints ()
+  "Provides hints about this configuration, or closes said hints."
+  (interactive)
+  (let* ((hints-buffer-name "Colemak-Evil Hints") 
+	 (hints-buffer (get-buffer hints-buffer-name) ) )
+    ;;if hints are currently visible, close them. Otherwise, display them.
+    (if (and hints-buffer 
+	     (get-buffer-window hints-buffer)) 
+	(progn (delete-windows-on hints-buffer-name)
+	       (kill-buffer hints-buffer-name))
+      (with-output-to-temp-buffer hints-buffer-name
+	(princ colemak-evil-hintstring)))))
+
+
+
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
@@ -260,3 +304,15 @@
 (define-key evil-window-map "i" 'evil-window-right)
 (define-key evil-window-map "I" 'evil-window-move-far-right)
 (define-key evil-window-map "k" 'evil-window-new)
+
+
+;; Custom : commands
+;; Makes ; an alias for :
+(define-key evil-motion-state-map ";" 'evil-ex-read-command)
+(evil-ex-define-cmd "git" 'magit-status)
+(evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
+(evil-ex-define-cmd "c" "comment")
+
+(evil-ex-define-cmd "hints" 'colemak-evil-hints)
+(evil-ex-define-cmd "h" "hints")
+(evil-ex-define-cmd "ars" "hints")
