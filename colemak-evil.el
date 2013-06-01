@@ -313,4 +313,7 @@ PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> | 
 (evil-ex-define-cmd "h" "hints")
 (evil-ex-define-cmd "ars" "hints")
 
+(evil-ex-define-cmd "git" 'magit-status)
+(evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
+(evil-ex-define-cmd "c" "comment")
 
