@@ -24,6 +24,9 @@ Setup
 
 Tips
 ----
+
+Type :hints or :ars to bring up the hint screen.
+
 Escape takes you into normal mode, but you may find that defining your
 own key combination using [Key Chord](http://www.emacswiki.org/emacs/key-chord.el)
 to be more comfortable. The only home-row combination that I know of
