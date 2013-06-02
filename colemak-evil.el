@@ -31,7 +31,21 @@ Normal mode:
   Ctrl+:   |          |          |          | VisBlock |          |  Digraph |  =<CR>   |          |          |          |    · = char arg.
 Up/Dn scrl |Z Redo    |X <-Cut   |C CopyLin |V <-Paste |B RevFndCh|K <-Next§ |M ScrMid  |< Unindt> |> Indent> |? <-Find§ |    > = move arg.
 PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> |  Set Mk· |, (usr)·  |. Repeat  |/ Find§-> |
-           +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+")
+           +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
+
+====Commands====
+
+Help:
+:hints = :ars = shows/dismisses this prompt (M-x colemak-evil-hints)
+:key = describes key (C-h k)
+:fun = describes function (C-h f)
+
+Shortcuts:
+:comment = :c = M-x comment-or-uncomment-region
+:git = M-x magit-status
+:eval = :ev = Evaluates an elisp expression (C-:)
+
+")
 
 (defun colemak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
@@ -308,12 +322,27 @@ PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> | 
 ;;allows you to use ; as :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
 
-;; Hooks for hints
+;;hooks for hints
 (evil-ex-define-cmd "hints" 'colemak-evil-hints)
-(evil-ex-define-cmd "h" "hints")
 (evil-ex-define-cmd "ars" "hints")
 
+;;git
 (evil-ex-define-cmd "git" 'magit-status)
+
+;;comment
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
 (evil-ex-define-cmd "c" "comment")
+
+;;M-:
+(evil-ex-define-cmd "eval" 'eval-expression)
+(evil-ex-define-cmd "ev" "eval")
+
+;;C-h k
+(evil-ex-define-cmd "describe-key" 'describe-key)
+(evil-ex-define-cmd "key" "describe-key")
+
+;;C-h f
+(evil-ex-define-cmd "describe-function" 'describe-function)
+(evil-ex-define-cmd "function" "describe-function")
+(evil-ex-define-cmd "fun" "describe-function")
 
