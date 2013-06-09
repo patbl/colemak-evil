@@ -5,9 +5,9 @@ Colemak Evil is a set of remappings that implements some of
 Shai Coleman's awesome Vim remappings in Emacs
 ([more information](http://forum.colemak.com/viewtopic.php?id=50)).
 
-It's usable, but I'm an expert in neither Vim nor Emacs so you'll
-likely encounter some funky behavior. If you have any improvements,
-I'd be glad to integrate them.
+It's usable, but I'm an expert in neither Vim nor Emacs, so you may encounter
+some funky behavior. If you have any improvements, I'd be glad to integrate
+them.
 
 Here are a few of the main differences from Shai's mappings:
 
@@ -25,7 +25,7 @@ Setup
 Tips
 ----
 
-Type :hints or :ars to bring up the hint screen.
+Type :hints (:h should also work) to bring up the hint screen.
 
 Escape takes you into normal mode, but you may find that defining your
 own key combination using [Key Chord](http://www.emacswiki.org/emacs/key-chord.el)

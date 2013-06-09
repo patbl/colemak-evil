@@ -36,7 +36,7 @@ PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> | 
 ====Commands====
 
 Help:
-:hints = :ars = shows/dismisses this prompt (M-x colemak-evil-hints)
+:hints = shows/dismisses this prompt (M-x colemak-evil-hints)
 :key = describes key (C-h k)
 :fun = describes function (C-h f)
 
@@ -324,7 +324,6 @@ Shortcuts:
 
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'colemak-evil-hints)
-(evil-ex-define-cmd "ars" "hints")
 
 ;;git
 (evil-ex-define-cmd "git" 'magit-status)
@@ -345,4 +344,3 @@ Shortcuts:
 (evil-ex-define-cmd "describe-function" 'describe-function)
 (evil-ex-define-cmd "function" "describe-function")
 (evil-ex-define-cmd "fun" "describe-function")
-
