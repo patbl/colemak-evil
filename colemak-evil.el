@@ -46,6 +46,8 @@ Shortcuts:
 
 ")
 
+(require 'colemak-jump)
+
 (defun colemak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
