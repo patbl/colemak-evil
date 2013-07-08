@@ -1,11 +1,10 @@
 ;;; License
 
-;; This software is released under the CC0 1.0 Universal license. You are
-;; free to use, modify, and redistribute it as you please. This software
-;; comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
-;; http://creativecommons.org/publicdomain/zero/1.0/
+;; This software is licensed under the CC0 1.0 Public Domain Declaration, as
+;; released by Creative Commons <http://creativecommons.org/publicdomain/zero/1.0/>.
+;; This software comes with NO WARRANTIES OR GUARANTEES WHATSOEVER.
 
-(defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
+(defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, or M-x colemak-evil-hints.
 
 To dismiss: retype one of the above commands or press q in the buffer.
 
@@ -19,8 +18,8 @@ Normal mode:
 +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
 |          |  Quit    |          |          |          |          |          |          |          |          |          |          |          |
 |  NextTab |  =<C-v>  |  WinCmd  |  GUIFind |  =<Up>   |Abort cmd |          |   <--    |  ScrlUp  |   ->|    |          |          |          |
-| <TAB>    |Q PlyMcrQ |W ChangeLn|F <-Find· |P <-Prch· |G ScrMid  |J JoinLine|L <-WORD  |U  5Up    |Y WORD->  |; z-Cmd·  |{ |<-Para |} Para->| |
-| <TAB>    |  RecMcr· |  Change  |  Find·-> |  Prch·-> |  g-Cmd·  |  PgUp    |  <-word  |    Up    |  word->  |: z-Cmd·  |[ <-Misc· |] Misc·-> |
+| <TAB>    |Q PlyMcrQ |W ChangeLn|F JmpNerTo|P <-Prch· |G ScrMid  |J JoinLine|L <-WORD  |U  5Up    |Y WORD->  |; z-Cmd·  |{ |<-Para |} Para->| |
+| <TAB>    |  RecMcr· |  Change  |  JumpNear|  Prch·-> |  g-Cmd·  |  PgUp    |  <-word  |    Up    |  word->  |: z-Cmd·  |[ <-Misc· |] Misc·-> |
 +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
  Meta----->|          |          |          |          |          |          |          |          |          |          |          |          |
  Ctrl----->|  AreaAll |  Redo    |  Search  |          |  DelWord |          |          |  ScrlDwn |          |          |          |          |
@@ -29,8 +28,8 @@ Normal mode:
            +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
            |          |          |          |          |          |          |          |          |          |          |
   Ctrl+:   |          |          |          | VisBlock |          |  Digraph |  =<CR>   |          |          |          |    · = char arg.
-Up/Dn scrl |Z Redo    |X <-Cut   |C CopyLin |V <-Paste |B RevFndCh|K <-Next§ |M ScrMid  |< Unindt> |> Indent> |? <-Find§ |    > = move arg.
-PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> |  Set Mk· |, (usr)·  |. Repeat  |/ Find§-> |
+Up/Dn scrl |Z Redo    |X <-Cut   |C CopyLin |V <-Paste |B JmpChrTo|K <-Next§ |M ScrMid  |< Unindt> |> Indent> |? <-Find§ |    > = move arg.
+PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  JumpChar|  Next§-> |  Set Mk· |, (usr)·  |. Repeat  |/ Find§-> |
            +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
 
 ====Commands====
@@ -282,6 +281,14 @@ Shortcuts:
 ;;; Search
 (define-key evil-motion-state-map "k" 'evil-search-next)
 (define-key evil-motion-state-map "K" 'evil-search-previous)
+
+;;Ace jump; replaces find-char and find-char-backwards (requires ace-jump-mode)
+;; f/F limits to nearby targets so that only one typing step required.  b/B/C-f searches whole buffer.
+(set-in-all-evil-states-but-insert "f" 'colemak-evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "F" 'colemak-evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "b" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "B" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 ;;; Folding
 ;; (define-key evil-normal-state-map "zo" 'evil-open-fold)
