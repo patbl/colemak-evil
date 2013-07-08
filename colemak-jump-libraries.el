@@ -93,7 +93,7 @@ regions-search-limit is our search bound."
                             r         ;zero is the lowest we can go
                           (1- r))))
 
-(defmacro if-point-changed (action decreasedAction &optional increasedAction samePlaceAction)
+(defmacro if-point-changed (action &optional decreasedAction increasedAction samePlaceAction)
   "Checks whether the point decreased, increased, or stayed the same as a result of action,
 executes the resulting actions"
   `(let ((old-point (point)))
