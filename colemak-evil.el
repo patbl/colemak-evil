@@ -351,3 +351,23 @@ Shortcuts:
 (evil-ex-define-cmd "describe-function" 'describe-function)
 (evil-ex-define-cmd "function" "describe-function")
 (evil-ex-define-cmd "fun" "describe-function")
+
+
+;;FRAGILE
+;;Redefines visual updates so as to update the primary, rather than the clipboard, with the selection
+;;This also allows you to select a region, copy from outside, then paste into the region
+(defun evil-visual-update-x-selection (&optional buffer)
+  "Update the X selection with the current visual region."
+  (let ((buf (or buffer (current-buffer))))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (when (and (evil-visual-state-p)
+                   (fboundp 'x-select-text)
+                   (or (not (boundp 'ns-initialized))
+                       (with-no-warnings ns-initialized))
+                   (not (eq evil-visual-selection 'block)))
+          (x-set-selection 'PRIMARY (buffer-substring-no-properties
+                                     evil-visual-beginning
+                                     evil-visual-end))
+          (setq x-last-selected-text-primary ))))))
+
