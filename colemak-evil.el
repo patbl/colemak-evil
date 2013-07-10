@@ -1,11 +1,21 @@
 ;;; License
 
-;; This software is released under the CC0 1.0 Universal license. You are
-;; free to use, modify, and redistribute it as you please. This software
-;; comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
-;; http://creativecommons.org/publicdomain/zero/1.0/
+;; This software is licensed under the CC0 1.0 Public Domain Declaration, as
+;; released by Creative Commons <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-(defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS",
+;; WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+;; THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+;; NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+;; FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+;; (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+;; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+;; ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+;; (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+(defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, or M-x colemak-evil-hints.
 
 To dismiss: retype one of the above commands or press q in the buffer.
 
@@ -19,8 +29,8 @@ Normal mode:
 +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
 |          |  Quit    |          |          |          |          |          |          |          |          |          |          |          |
 |  NextTab |  =<C-v>  |  WinCmd  |  GUIFind |  =<Up>   |Abort cmd |          |   <--    |  ScrlUp  |   ->|    |          |          |          |
-| <TAB>    |Q PlyMcrQ |W ChangeLn|F <-Find· |P <-Prch· |G ScrMid  |J JoinLine|L <-WORD  |U  5Up    |Y WORD->  |; z-Cmd·  |{ |<-Para |} Para->| |
-| <TAB>    |  RecMcr· |  Change  |  Find·-> |  Prch·-> |  g-Cmd·  |  PgUp    |  <-word  |    Up    |  word->  |: z-Cmd·  |[ <-Misc· |] Misc·-> |
+| <TAB>    |Q PlyMcrQ |W ChangeLn|F JmpNerTo|P <-Prch· |G ScrMid  |J JoinLine|L <-WORD  |U  5Up    |Y WORD->  |; z-Cmd·  |{ |<-Para |} Para->| |
+| <TAB>    |  RecMcr· |  Change  |  JumpNear|  Prch·-> |  g-Cmd·  |  PgUp    |  <-word  |    Up    |  word->  |: z-Cmd·  |[ <-Misc· |] Misc·-> |
 +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
  Meta----->|          |          |          |          |          |          |          |          |          |          |          |          |
  Ctrl----->|  AreaAll |  Redo    |  Search  |          |  DelWord |          |          |  ScrlDwn |          |          |          |          |
@@ -29,8 +39,8 @@ Normal mode:
            +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
            |          |          |          |          |          |          |          |          |          |          |
   Ctrl+:   |          |          |          | VisBlock |          |  Digraph |  =<CR>   |          |          |          |    · = char arg.
-Up/Dn scrl |Z Redo    |X <-Cut   |C CopyLin |V <-Paste |B RevFndCh|K <-Next§ |M ScrMid  |< Unindt> |> Indent> |? <-Find§ |    > = move arg.
-PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  RepFndCh|  Next§-> |  Set Mk· |, (usr)·  |. Repeat  |/ Find§-> |
+Up/Dn scrl |Z Redo    |X <-Cut   |C CopyLin |V <-Paste |B JmpChrTo|K <-Next§ |M ScrMid  |< Unindt> |> Indent> |? <-Find§ |    > = move arg.
+PgUp/Dn HL |  Undo    |  Cut->   |  Copy >  |  Paste-> |  JumpChar|  Next§-> |  Set Mk· |, (usr)·  |. Repeat  |/ Find§-> |
            +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
 
 ====Commands====
@@ -46,6 +56,8 @@ Shortcuts:
 :eval = :ev = Evaluates an elisp expression (C-:)
 
 ")
+
+(require 'colemak-jump)
 
 (defun colemak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
@@ -283,6 +295,14 @@ Shortcuts:
 (define-key evil-motion-state-map "k" 'evil-search-next)
 (define-key evil-motion-state-map "K" 'evil-search-previous)
 
+;;Ace jump; replaces find-char and find-char-backwards (requires ace-jump-mode)
+;; f/F limits to nearby targets so that only one typing step required.  b/B/C-f searches whole buffer.
+(set-in-all-evil-states-but-insert "f" 'colemak-evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "F" 'colemak-evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "b" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "B" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
+
 ;;; Folding
 ;; (define-key evil-normal-state-map "zo" 'evil-open-fold)
 ;; (define-key evil-normal-state-map "zc" 'evil-close-fold)
@@ -344,3 +364,23 @@ Shortcuts:
 (evil-ex-define-cmd "describe-function" 'describe-function)
 (evil-ex-define-cmd "function" "describe-function")
 (evil-ex-define-cmd "fun" "describe-function")
+
+
+;;FRAGILE
+;;Redefines visual updates so as to update the primary, rather than the clipboard, with the selection
+;;This also allows you to select a region, copy from outside, then paste into the region
+(defun evil-visual-update-x-selection (&optional buffer)
+  "Update the X selection with the current visual region."
+  (let ((buf (or buffer (current-buffer))))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (when (and (evil-visual-state-p)
+                   (fboundp 'x-select-text)
+                   (or (not (boundp 'ns-initialized))
+                       (with-no-warnings ns-initialized))
+                   (not (eq evil-visual-selection 'block)))
+          (x-set-selection 'PRIMARY (buffer-substring-no-properties
+                                     evil-visual-beginning
+                                     evil-visual-end))
+          (setq x-last-selected-text-primary ))))))
+

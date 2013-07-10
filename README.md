@@ -18,7 +18,7 @@ Here are a few of the main differences from Shai's mappings:
 
 Setup
 -----
-1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
+1. [Install Evil](http://gitorious.org/evil/pages/Home#Install), ace-jump-mode.
 2. Download Colemak Evil and put it somewhere in your load path.
 3. Add `(load "colemak-evil")` to your Emacs init file.
 
