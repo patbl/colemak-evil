@@ -1,9 +1,20 @@
 ;;; License
-
-;; This software is released under the CC0 1.0 Universal license. You are
-;; free to use, modify, and redistribute it as you please. This software
-;; comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
-;; http://creativecommons.org/publicdomain/zero/1.0/
+    
+;; Colemak Evil: A set of optimized Vim-like key bindings for Emacs.
+;; Copyright (C) 2013 Patrick Brinich-Langlois
+;; 
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;; 
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;; 
+;; For the full text of the GNU General Public License, see
+;; http://www.gnu.org/licenses/gpl.html 
 
 (defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
 
@@ -344,3 +355,21 @@ Shortcuts:
 (evil-ex-define-cmd "describe-function" 'describe-function)
 (evil-ex-define-cmd "function" "describe-function")
 (evil-ex-define-cmd "fun" "describe-function")
+
+;;FRAGILE
+;;Redefines visual updates so as to update the primary, rather than the clipboard, with the selection
+;;This also allows you to select a region, copy from outside, then paste into the region
+(defun evil-visual-update-x-selection (&optional buffer)
+  "Update the X selection with the current visual region."
+  (let ((buf (or buffer (current-buffer))))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (when (and (evil-visual-state-p)
+                   (fboundp 'x-select-text)
+                   (or (not (boundp 'ns-initialized))
+                       (with-no-warnings ns-initialized))
+                   (not (eq evil-visual-selection 'block)))
+          (x-set-selection 'PRIMARY (buffer-substring-no-properties
+                                     evil-visual-beginning
+                                     evil-visual-end))
+          (setq x-last-selected-text-primary ))))))
