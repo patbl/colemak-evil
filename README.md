@@ -43,3 +43,13 @@ get your setup where you want it. For insert-mode mappings, check out
 [ErgoEmacs](http://ergoemacs.org/emacs/ergonomic_emacs_keybinding.html),
 which provides saner alternatives to Emacs's mappings (there's a
 Colemak version).
+
+An Alternative
+--------------
+
+[Lalopmak Evil](https://github.com/lalopmak/lalopmak-evil), another
+set of Emacs mappings based on Shai's Vim layout, "takes some of
+Shai's ideas even further." If you're used to and happy with Shai's
+mappings, you'll probably be satisfied with Colemak Evil. But if
+you're just starting out or you're an efficiency fanatic, Lalopmak
+Evil may be the better choice.
