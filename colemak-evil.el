@@ -1,26 +1,80 @@
-;;; License
-    
-;; Colemak Evil: A set of optimized Vim-like key bindings for Emacs.
-;; Copyright (C) 2013 Patrick Brinich-Langlois
-;; 
-;; This program is free software: you can redistribute it and/or modify
+;; colemak-evil.el --- Optimized Vim-like key bindings for Emacs.
+
+;; Copyright 2012-2014 Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
+
+;; Author: Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
+;; URL: https://github.com/patbl/colemak-evil
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-;; 
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-;; 
-;; For the full text of the GNU General Public License, see
-;; http://www.gnu.org/licenses/gpl.html 
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+;;
+;; Colemak Evil is a set of remappings that implements some of
+;; Shai Coleman's awesome Vim remappings in Emacs
+;; ([more information](http://forum.colemak.com/viewtopic.php?id=50)).
+;;
+;; Here are the main differences from Shai's mappings:
+;;
+;; * The only Vim mapping that works in insert mode is Esc (this avoids
+;;   conflicts with Emacs's shortucts). Tab in insert mode doesn't take
+;;   you into normal mode.
+;; * Folding and several other features aren't implemented.
+;;
+;; Setup
+;; -----
+;; 1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
+;; 2. Download Colemak Evil and put it somewhere in your load path.
+;; 3. Add `(load "colemak-evil")` to your Emacs init file.
+;;
+;; Tips
+;; ----
+;;
+;; Type :hints (or just :h) to bring up the hint screen.
+;;
+;; Escape takes you into normal mode, but you may find that defining your
+;; own key combination using
+;; [Key Chord](http://www.emacswiki.org/emacs/key-chord.el) to be more
+;; comfortable. The only adjacent home-row combinations that are
+;; relatively uncommon in English "hn" and "td." If you find yourself
+;; unintentionally entering normal mode when typing quickly, you might
+;; try reducing the key delay:
+;;
+;;     (key-chord-define-global "td" 'evil-normal-state)
+;;     (setq key-chord-two-keys-delay .01)
+;;
+;; If this doesn't work, you can use the spacebar as one of the keys:
+;;
+;;     (key-chord-define-global " e" 'evil-normal-state)
+;;
+;; There are also some Vim features that haven't yet been implemented in
+;; Evil. You'll probably have to add quite a few of your own mappings to
+;; get your setup where you want it. For insert-mode mappings, check out
+;; [ErgoEmacs](http://ergoemacs.org/emacs/ergonomic_emacs_keybinding.html),
+;; which provides saner alternatives to Emacs's mappings (there's a
+;; Colemak version).
+;;
+;;; Code:
 
 (defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
 
 To dismiss: retype one of the above commands or press q in the buffer.
 
-NOTE/CREDITS: These hints were originally created by DreymaR for golemak.vim (http://forum.colemak.com/viewtopic.php?pid=6789#p6789). 
+NOTE/CREDITS: These hints were originally created by DreymaR for golemak.vim (http://forum.colemak.com/viewtopic.php?pid=6789#p6789).
 Though most should have been corrected, some may still not be valid for colemak-evil.el.
 
 Normal mode:
@@ -61,11 +115,11 @@ Shortcuts:
 (defun colemak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
-  (let* ((hints-buffer-name "Colemak-Evil Hints") 
+  (let* ((hints-buffer-name "Colemak-Evil Hints")
 	 (hints-buffer (get-buffer hints-buffer-name) ) )
     ;;if hints are currently visible, close them. Otherwise, display them.
-    (if (and hints-buffer 
-	     (get-buffer-window hints-buffer)) 
+    (if (and hints-buffer
+	     (get-buffer-window hints-buffer))
 	(progn (delete-windows-on hints-buffer-name)
 	       (kill-buffer hints-buffer-name))
       (with-output-to-temp-buffer hints-buffer-name
@@ -73,9 +127,9 @@ Shortcuts:
 
 
 ;; remove all keybindings from insert-state keymap
-(setcdr evil-insert-state-map nil) 
+(setcdr evil-insert-state-map nil)
 ;; but [escape] should switch back to normal state
-(define-key evil-insert-state-map [escape] 'evil-normal-state) 
+(define-key evil-insert-state-map [escape] 'evil-normal-state)
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
 
@@ -105,7 +159,7 @@ Shortcuts:
 				   evil-emacs-state-map)))
 
 ;;; No insert-state alt-navigation remappings (they would clobber
-;;; Emacs shortcuts, and Emacs has its own navigation commands that 
+;;; Emacs shortcuts, and Emacs has its own navigation commands that
 ;;; you can use.
 
 ;;; Up/down/left/right
@@ -132,7 +186,7 @@ Shortcuts:
 (define-key evil-motion-state-map (kbd "j") 'evil-scroll-page-up)
 (define-key evil-motion-state-map (kbd "h") 'evil-scroll-page-down)
 
-;;; Page halfway up/down 
+;;; Page halfway up/down
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 

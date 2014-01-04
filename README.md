@@ -5,16 +5,12 @@ Colemak Evil is a set of remappings that implements some of
 Shai Coleman's awesome Vim remappings in Emacs
 ([more information](http://forum.colemak.com/viewtopic.php?id=50)).
 
-It's usable, but I'm an expert in neither Vim nor Emacs, so you may encounter
-some funky behavior. If you have any improvements, I'd be glad to integrate
-them.
-
-Here are a few of the main differences from Shai's mappings:
+Here are the main differences from Shai's mappings:
 
 * The only Vim mapping that works in insert mode is Esc (this avoids
-  conflicts with Emacs's shortucts).
+  conflicts with Emacs's shortucts). Tab in insert mode doesn't take
+  you into normal mode.
 * Folding and several other features aren't implemented.
-* Tab in insert mode doesn't take you into normal mode. 
 
 Setup
 -----
@@ -25,17 +21,22 @@ Setup
 Tips
 ----
 
-Type :hints (:h should also work) to bring up the hint screen.
+Type :hints (or just :h) to bring up the hint screen.
 
 Escape takes you into normal mode, but you may find that defining your
-own key combination using [Key Chord](http://www.emacswiki.org/emacs/key-chord.el)
-to be more comfortable. The only home-row combination that I know of
-that is relatively uncommon in English is "hn." If you reduce the
-delay, you can use a common combination, such as "ne." After setting
-up Key Chord, the following worked for me:
+own key combination using
+[Key Chord](http://www.emacswiki.org/emacs/key-chord.el) to be more
+comfortable. The only adjacent home-row combinations that are
+relatively uncommon in English "hn" and "td." If you find yourself
+unintentionally entering normal mode when typing quickly, you might
+try reducing the key delay:
 
-    (setq key-chord-two-keys-delay .03)
-    (key-chord-define-global "ne" 'evil-normal-state)
+    (key-chord-define-global "td" 'evil-normal-state)
+    (setq key-chord-two-keys-delay .01)
+
+If this doesn't work, you can use the spacebar as one of the keys:
+
+    (key-chord-define-global " e" 'evil-normal-state)
 
 There are also some Vim features that haven't yet been implemented in
 Evil. You'll probably have to add quite a few of your own mappings to
