@@ -430,4 +430,6 @@ Shortcuts:
                                      evil-visual-end))
           (setq x-last-selected-text-primary ))))))
 
+(provide 'colemak-evil)
+
 ;;; colemak-evil.el ends here
