@@ -1,4 +1,4 @@
-;; colemak-evil.el --- Optimized Vim-like key bindings for Emacs.
+;;; colemak-evil.el --- Colemak-friendly keybindings for Evil.
 
 ;; Copyright 2012-2014 Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
 
@@ -427,3 +427,5 @@ Shortcuts:
                                      evil-visual-beginning
                                      evil-visual-end))
           (setq x-last-selected-text-primary ))))))
+
+;;; colemak-evil.el ends here
