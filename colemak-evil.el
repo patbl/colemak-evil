@@ -4,6 +4,7 @@
 
 ;; Author: Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
 ;; URL: https://github.com/patbl/colemak-evil
+;; Package-Requires: ((evil "1.0.8"))
 
 ;; This file is NOT part of GNU Emacs.
 
