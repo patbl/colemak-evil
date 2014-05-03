@@ -14,6 +14,11 @@ Here are the main differences from Shai's mappings:
 
 Setup
 -----
+
+If you're an Emacs 24 user or you have a recent version of package.el
+you can install Colemak Evil from the MELPA repository. Otherwise,
+follow these instructions:
+
 1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
 2. Download Colemak Evil and put it somewhere in your load path.
 3. Add `(load "colemak-evil")` to your Emacs init file.

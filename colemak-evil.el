@@ -25,7 +25,6 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Commentary:
-;;
 ;; Colemak Evil is a set of remappings that implements some of
 ;; Shai Coleman's awesome Vim remappings in Emacs
 ;; ([more information](http://forum.colemak.com/viewtopic.php?id=50)).
@@ -39,6 +38,11 @@
 ;;
 ;; Setup
 ;; -----
+;;
+;; If you're an Emacs 24 user or you have a recent version of
+;; package.el you can install Colemak Evil from the MELPA repository.
+;; Otherwise, follow these instructions:
+;;
 ;; 1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
 ;; 2. Download Colemak Evil and put it somewhere in your load path.
 ;; 3. Add `(load "colemak-evil")` to your Emacs init file.
