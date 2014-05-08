@@ -94,6 +94,7 @@
 ;; Evil may be the better choice.
 ;;
 ;;; Code:
+(require 'evil)
 
 (defvar colemak-evil-hintstring "Hints for colemak-evil.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
 
@@ -155,8 +156,6 @@ Shortcuts:
 (setcdr evil-insert-state-map nil)
 ;; but [escape] should switch back to normal state
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
-;; make undo more incremental (break into smaller chunks)
-(setq evil-want-fine-undo t)
 
 ;; map multiple states at once (courtesy of Michael Markert;
 ;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
