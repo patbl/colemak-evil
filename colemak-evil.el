@@ -177,11 +177,6 @@ Shortcuts:
 				   evil-motion-state-map)))
 
 
-(defun set-in-all-evil-states-but-insert-and-motion (key def)
-  (set-in-all-evil-states key def (list evil-normal-state-map
-				   evil-visual-state-map
-				   evil-emacs-state-map)))
-
 ;;; No insert-state alt-navigation remappings (they would clobber
 ;;; Emacs shortcuts, and Emacs has its own navigation commands that
 ;;; you can use.
