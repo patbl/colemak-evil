@@ -1,11 +1,11 @@
 ;;; colemak-evil.el --- Colemak-friendly keybindings for Evil.
 
-;; Copyright 2012-2014 Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
+;; Copyright 2012-2017 Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
 
 ;; Author: Patrick Brinich-Langlois <pbrinichlanglois@gmail.com>
-;; Version: 1.0.0
+;; Version: 2.0.0
 ;; URL: https://github.com/patbl/colemak-evil
-;; Package-Requires: ((evil "1.0.8"))
+;; Package-Requires: ((evil "20170323.1140"))
 
 ;; This file is NOT part of GNU Emacs.
 
