@@ -1,5 +1,6 @@
 Colemak Evil
 ============
+[![MELPA](https://melpa.org/packages/colemak-evil-badge.svg)](https://melpa.org/#/colemak-evil)
 
 Colemak Evil is a set of remappings that implements some of
 Shai Coleman's awesome Vim remappings in Emacs
