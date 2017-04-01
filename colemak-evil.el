@@ -159,19 +159,13 @@ Shortcuts:
 
 ;; map multiple states at once (courtesy of Michael Markert;
 ;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
-(defun set-in-all-evil-states (key def &optional maps)
-  (unless maps
-    (setq maps (list evil-normal-state-map
-                     evil-visual-state-map
-                     evil-insert-state-map
-                     evil-emacs-state-map
-		     evil-motion-state-map)))
+(defun set-in-evil-states (key def maps)
   (while maps
     (define-key (pop maps) key def)))
 
 
 (defun set-in-all-evil-states-but-insert (key def)
-  (set-in-all-evil-states key def (list evil-normal-state-map
+  (set-in-evil-states key def (list evil-normal-state-map
 				   evil-visual-state-map
 				   evil-emacs-state-map
 				   evil-motion-state-map)))
