@@ -163,57 +163,54 @@ Shortcuts:
   (while maps
     (define-key (pop maps) key def)))
 
-
-(defun set-in-all-evil-states-but-insert (key def)
-  (set-in-evil-states key def (list evil-normal-state-map
-				   evil-visual-state-map
-				   evil-emacs-state-map
-				   evil-motion-state-map)))
-
+(defun set-in-navigation-evil-states (key def)
+  (set-in-evil-states key def (list evil-motion-state-map
+                                    evil-normal-state-map
+                                    evil-visual-state-map)))
 
 ;;; No insert-state alt-navigation remappings (they would clobber
 ;;; Emacs shortcuts, and Emacs has its own navigation commands that
 ;;; you can use.
 
 ;;; Up/down/left/right
-(set-in-all-evil-states-but-insert "u" 'evil-previous-line)
-(set-in-all-evil-states-but-insert "e" 'evil-next-line)
-(set-in-all-evil-states-but-insert "n" 'evil-backward-char)
-(set-in-all-evil-states-but-insert "i" 'evil-forward-char)
+(set-in-navigation-evil-states "u" 'evil-previous-line)
+(set-in-navigation-evil-states "e" 'evil-next-line)
+(set-in-navigation-evil-states "n" 'evil-backward-char)
+(set-in-navigation-evil-states "i" 'evil-forward-char)
 (define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;;; Turbo navigation mode
-(set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
-(set-in-all-evil-states-but-insert "N" '(lambda () (interactive) (evil-backward-char 5)))
-(set-in-all-evil-states-but-insert "E" '(lambda () (interactive) (evil-next-line 5)))
-(set-in-all-evil-states-but-insert "U" '(lambda () (interactive) (evil-previous-line 5)))
+(set-in-navigation-evil-states "I" '(lambda () (interactive) (evil-forward-char 5)))
+(set-in-navigation-evil-states "N" '(lambda () (interactive) (evil-backward-char 5)))
+(set-in-navigation-evil-states "E" '(lambda () (interactive) (evil-next-line 5)))
+(set-in-navigation-evil-states "U" '(lambda () (interactive) (evil-previous-line 5)))
 
 ;;; Beginning/end of line (home/end)
 ;; Use back-to-indentation instead of evil-beginning-of-line so that
 ;; cursor ends up at the first non-whitespace character of a line. 0
 ;; can be used to go to real beginning of line
-(set-in-all-evil-states-but-insert "L" 'back-to-indentation)
-(set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
+(set-in-navigation-evil-states "L" 'back-to-indentation)
+(set-in-navigation-evil-states "Y" 'evil-end-of-line)
 
 ;;; Page up/page down
 (define-key evil-motion-state-map (kbd "j") 'evil-scroll-page-up)
 (define-key evil-motion-state-map (kbd "h") 'evil-scroll-page-down)
 
 ;;; Page halfway up/down
-(set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
-(set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
+(set-in-navigation-evil-states "\C-u" 'evil-scroll-up)
+(set-in-navigation-evil-states "\C-e" 'evil-scroll-down)
 
 ;;; Jump to line
 ;; Redundant with gg and G
-;; (set-in-all-evil-states-but-insert "-" 'evil-goto-first-line)
-;; (set-in-all-evil-states-but-insert "_" 'evil-goto-line)
+;; (set-in-navigation-evil-states "-" 'evil-goto-first-line)
+;; (set-in-navigation-evil-states "_" 'evil-goto-line)
 
 ;;; Words forward/backward
-(set-in-all-evil-states-but-insert "l" 'evil-backward-word-begin)
-(set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
+(set-in-navigation-evil-states "l" 'evil-backward-word-begin)
+(set-in-navigation-evil-states "y" 'evil-forward-word-begin)
 ;;; WORD forward/backward
-(set-in-all-evil-states-but-insert (kbd "C-y") 'evil-forward-WORD-begin)
-(set-in-all-evil-states-but-insert (kbd "C-l") 'evil-backward-WORD-begin)
+(set-in-navigation-evil-states (kbd "C-y") 'evil-forward-WORD-begin)
+(set-in-navigation-evil-states (kbd "C-l") 'evil-backward-WORD-begin)
 
 ;;; inneR text objects
 (define-key evil-visual-state-map "r" evil-inner-text-objects-map)
@@ -225,8 +222,8 @@ Shortcuts:
 (define-key evil-motion-state-map ";" 'evil-ex)
 
 ;;; Word end forward/backward
-;; (set-in-all-evil-states-but-insert ";" 'evil-forward-word-end)
-;; (set-in-all-evil-states-but-insert "g;" 'evil-backward-word-end)
+;; (set-in-navigation-evil-states ";" 'evil-forward-word-end)
+;; (set-in-navigation-evil-states "g;" 'evil-backward-word-end)
 
 ;;; Folds, etc.
 ;; (define-key evil-normal-state-map ",o" 'evil-open-fold)
@@ -240,16 +237,16 @@ Shortcuts:
 ;; set virtualedit=block,onemore
 
 ;;; Cut/copy/paste
-(set-in-all-evil-states-but-insert "x" 'evil-delete-char)
-(set-in-all-evil-states-but-insert "X" 'evil-delete-line)  ; delete to end of line; use dd to delete whole line
-(set-in-all-evil-states-but-insert "c" 'evil-yank)
-(set-in-all-evil-states-but-insert "C" 'evil-yank-line)
-(set-in-all-evil-states-but-insert "v" 'evil-paste-before)
-(set-in-all-evil-states-but-insert "V" 'evil-paste-after)
+(set-in-navigation-evil-states "x" 'evil-delete-char)
+(set-in-navigation-evil-states "X" 'evil-delete-line)  ; delete to end of line; use dd to delete whole line
+(set-in-navigation-evil-states "c" 'evil-yank)
+(set-in-navigation-evil-states "C" 'evil-yank-line)
+(set-in-navigation-evil-states "v" 'evil-paste-before)
+(set-in-navigation-evil-states "V" 'evil-paste-after)
 
 ;;; Change
-(set-in-all-evil-states-but-insert "w" 'evil-change)
-(set-in-all-evil-states-but-insert "W" 'evil-change-line)
+(set-in-navigation-evil-states "w" 'evil-change)
+(set-in-navigation-evil-states "W" 'evil-change-line)
 
 ;;; Undo/redo
 (define-key evil-normal-state-map "z" 'undo)
@@ -261,30 +258,30 @@ Shortcuts:
 ;; not sure what this is
 
 ;;; Cursor position jumplist
-(set-in-all-evil-states-but-insert "(" 'evil-jump-backward)
-(set-in-all-evil-states-but-insert ")" 'evil-jump-forward)
+(set-in-navigation-evil-states "(" 'evil-jump-backward)
+(set-in-navigation-evil-states ")" 'evil-jump-forward)
 
 ;;; Start/end of document
 ;; How is this different from gg/G?
 ;; C-h would interfere with the useful C-h f/v/k commands
-;; (set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
+;; (set-in-navigation-evil-states "\C-j" '(lambda () (interactive)
 					     ;; (goto-char (point-min))))
-;; (set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
+;; (set-in-navigation-evil-states "\C-h" '(lambda () (interactive)
 					     ;; (goto-char (point-max))))
 
 ;;; inSert/Replace/Append
-(set-in-all-evil-states-but-insert "s" 'evil-insert)
-(set-in-all-evil-states-but-insert "S" 'evil-insert-line)
-(set-in-all-evil-states-but-insert "t" 'evil-append)
-(set-in-all-evil-states-but-insert "T" 'evil-append-line)
+(set-in-navigation-evil-states "s" 'evil-insert)
+(set-in-navigation-evil-states "S" 'evil-insert-line)
+(set-in-navigation-evil-states "t" 'evil-append)
+(set-in-navigation-evil-states "T" 'evil-append-line)
 
 ;;; Make insert/add work also in visual line mode like in visual block mode
 ;; not sure what this means
 
 ;;; Visual mode
-(set-in-all-evil-states-but-insert "a" 'evil-visual-char)
-(set-in-all-evil-states-but-insert "A" 'evil-visual-line)
-(set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
+(set-in-navigation-evil-states "a" 'evil-visual-char)
+(set-in-navigation-evil-states "A" 'evil-visual-line)
+(set-in-navigation-evil-states "\C-a" 'mark-whole-buffer)
 
 ;;; visual Block mode
 ;; Since the system clipboard is accessible by Emacs through the
@@ -302,8 +299,8 @@ Shortcuts:
 ;;; Search
 ;; f unchanged
 ;; F unchanged
-(set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
-(set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
+(set-in-navigation-evil-states "p" 'evil-find-char-to)
+(set-in-navigation-evil-states "P" 'evil-find-char-to-backward)
 
 ;;; GUI search
 ;; not implemented
@@ -320,10 +317,10 @@ Shortcuts:
 ;; these might conflict with emacs mappings
 
 
-(set-in-all-evil-states-but-insert "J" 'evil-join)
+(set-in-navigation-evil-states "J" 'evil-join)
 
-(set-in-all-evil-states-but-insert "r" 'evil-replace)
-(set-in-all-evil-states-but-insert "R" 'evil-replace-state)
+(set-in-navigation-evil-states "r" 'evil-replace)
+(set-in-navigation-evil-states "R" 'evil-replace-state)
 
 (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
 (define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
@@ -371,8 +368,8 @@ Shortcuts:
 
 ;;; Visual line navigation
 ;; In normal mode, use "ge" and "gu" when lines wrap.
-(set-in-all-evil-states-but-insert "ge" 'evil-next-visual-line)
-(set-in-all-evil-states-but-insert "gu" 'evil-previous-visual-line)
+(set-in-navigation-evil-states "ge" 'evil-next-visual-line)
+(set-in-navigation-evil-states "gu" 'evil-previous-visual-line)
 
 ;;; Window handling
 ;; C-w (not C-r as in Shai's mappings) prefixes window commands
@@ -388,8 +385,8 @@ Shortcuts:
 
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
 
-(set-in-all-evil-states-but-insert "o" 'evil-open-below)
-(set-in-all-evil-states-but-insert "O" 'evil-open-above)
+(set-in-navigation-evil-states "o" 'evil-open-below)
+(set-in-navigation-evil-states "O" 'evil-open-above)
 
 
 ;;allows you to use ; as :
