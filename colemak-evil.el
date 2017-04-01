@@ -157,8 +157,6 @@ Shortcuts:
 ;; but [escape] should switch back to normal state
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
-;; map multiple states at once (courtesy of Michael Markert;
-;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
 (defun set-in-evil-states (key def maps)
   (while maps
     (define-key (pop maps) key def)))
