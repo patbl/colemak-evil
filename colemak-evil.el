@@ -278,11 +278,6 @@ Shortcuts:
 ;; (set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
 					     ;; (goto-char (point-max))))
 
-;;; Move cursor to top/bottom of screen
-;; next/prior are page up/down
-(set-in-all-evil-states (kbd "C-<next>") 'evil-window-bottom)
-(set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
-
 ;;; inSert/Replace/Append
 (set-in-all-evil-states-but-insert "s" 'evil-insert)
 (set-in-all-evil-states-but-insert "S" 'evil-insert-line)
