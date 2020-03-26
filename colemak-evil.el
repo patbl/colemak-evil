@@ -379,7 +379,7 @@ Shortcuts:
 
 
 ;;allows you to use ; as :
-(define-key evil-motion-state-map ";" 'evil-ex-read-command)
+(define-key evil-motion-state-map ";" 'evil-ex)
 
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'colemak-evil-hints)
