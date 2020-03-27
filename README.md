@@ -1,6 +1,26 @@
-Colemak Evil
+UNMAINTAINED
 ============
 [![MELPA](https://melpa.org/packages/colemak-evil-badge.svg)](https://melpa.org/#/colemak-evil)
+
+I no longer use this package; instead, I use the default Evil bindings. They
+take a little getting used to but make it much easier to use Vim
+keybindings in other contexts (e.g., on a remote server, in an editor with
+Vim-emulation enabled, or in Bash with Vi Mode enabled).
+
+Plus, because there are a lot of Evil users (relative to users of both Evil and
+Colemak), you're less likely to run into conflicts with other modes when using
+the default Evil bindings. And Evil users have often come up ways of dealing
+with conflicts when they arise (e.g. https://github.com/emacs-evil/evil-magit).
+
+If you'd like to have more-intuitive keybindings for Evil, you can try one of
+these packages:
+
+* https://github.com/wbolster/evil-colemak-basics
+* https://github.com/bmallred/evil-colemak-minimal
+* https://github.com/lalopmak/lalopmak-evil
+
+Original README
+===============
 
 Colemak Evil is a set of remappings that implements some of
 Shai Coleman's awesome Vim remappings in Emacs
@@ -47,13 +67,3 @@ get your setup where you want it. For insert-mode mappings, check out
 [ErgoEmacs](http://ergoemacs.org/emacs/ergonomic_emacs_keybinding.html),
 which provides saner alternatives to Emacs's mappings (there's a
 Colemak version).
-
-An Alternative
---------------
-
-[Lalopmak Evil](https://github.com/lalopmak/lalopmak-evil), another
-set of Emacs mappings based on Shai's Vim layout, "takes some of
-Shai's ideas even further." If you're used to and happy with Shai's
-mappings, you'll probably be satisfied with Colemak Evil. But if
-you're just starting out or you're an efficiency fanatic, Lalopmak
-Evil may be the better choice.
